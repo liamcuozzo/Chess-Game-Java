@@ -1,6 +1,4 @@
 public class Bishop extends Piece {
 
-    public Bishop(boolean color){
-        super(color);
-    }
+    public Bishop(boolean color, Player player){ super(color, player);}
 }

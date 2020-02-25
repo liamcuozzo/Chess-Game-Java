@@ -16,6 +16,8 @@ public abstract class Piece {
         return this.player;
     }
 
+    public abstract boolean canMove(int newX, int newY);
+
     public boolean getColor(){return this.white;}
     private void setColor(boolean color){this.white = color;}
 
