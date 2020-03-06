@@ -1,7 +1,7 @@
 public abstract class Piece {
 
     private Player player;
-    private boolean white;
+    private boolean color;
     private boolean killed = false;
 
     public Piece(boolean color, Player assignedPlayer){
@@ -16,10 +16,10 @@ public abstract class Piece {
         return this.player;
     }
 
-    public abstract boolean canMove(int newX, int newY);
+    public abstract boolean canMove(Board board, Spot start, Spot end);
 
-    public boolean getColor(){return this.white;}
-    private void setColor(boolean color){this.white = color;}
+    public boolean getColor(){return this.color;}
+    private void setColor(boolean color){this.color = color;}
 
     public boolean isKilled(){return this.killed;}
     public void setKilled(boolean killed){this.killed = killed;}
