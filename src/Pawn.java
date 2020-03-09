@@ -1,12 +1,11 @@
 import java.lang.*;
 
 public class Pawn extends Piece {
-
     private int moves; //checks for pawn making it to other side of board
     private boolean firstMove; //used to check if two space first move will be made
 
     public Pawn(boolean color, Player player){
-        super(color, player);
+        super(color, player, "Pawn");
         this.moves = 0;
         this.firstMove = true;
     }
