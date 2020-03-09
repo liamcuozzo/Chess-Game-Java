@@ -10,8 +10,6 @@ public class Main {
             Game.start();
 
 
-
-
         } catch (IOException e) {
             System.out.println("Error in entering names.");
             e.printStackTrace();
