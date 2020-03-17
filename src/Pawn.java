@@ -45,6 +45,7 @@ public class Pawn extends Piece {
             return true;
         }
 
+        System.out.println("Error:Got to last return in Pawn");
 
         return false;
     }
