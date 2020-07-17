@@ -1,7 +1,7 @@
 public class King extends Piece {
 
     King(boolean color, Player player){
-        super(color, player, "King");
+        super(color, player);
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
@@ -21,7 +21,11 @@ public class King extends Piece {
             return true;
         }
 
-        System.out.println("Error:Got to last return in Knight");
+        System.out.println("Error: Got to last return in Knight");
         return false;
+    }
+
+    public void printAction() {
+        System.out.print("[C]");
     }
 }

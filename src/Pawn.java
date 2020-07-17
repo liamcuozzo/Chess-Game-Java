@@ -5,7 +5,7 @@ public class Pawn extends Piece {
     private boolean firstMove; //used to check if two space first move will be made
 
     public Pawn(boolean color, Player player){
-        super(color, player, "Pawn");
+        super(color, player);
         this.moves = 0;
         this.firstMove = true;
     }
@@ -54,4 +54,7 @@ public class Pawn extends Piece {
         this.moves++;
     }
 
+    public void printAction() {
+        System.out.print("[P]");
+    }
 }

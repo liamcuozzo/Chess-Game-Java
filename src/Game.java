@@ -1,90 +1,57 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Game {
     private Board gameBoard;
-    private Player p1;
-    private Player p2;
+    private Player p1 = null;
+    private Player p2 = null;
 
-    public Game() throws IOException {
+    public Game() {
         initPlayers();
         gameBoard = new Board(p1, p2); //initializes the new game board
     }
 
-    private void initPlayers() throws IOException {
+    private void initPlayers() {
         String p1Name;
         String p2Name;
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Scanner input = new Scanner(System.in);
 
         System.out.println("Enter Player 1's name (white): ");
-        p1Name = reader.readLine();
+        p1Name = input.nextLine();
 
         System.out.println("Enter Player 2's name (black): ");
-        p2Name = reader.readLine();
+        p2Name = input.nextLine();
 
         this.p1 = new Player(p1Name);
         this.p2 = new Player(p2Name);
     }
 
-    public void start()
-    {
+   public void start() {
         drawBoard();
     }
 
-
-
     private void drawBoard()
     {
-        for (int i = 0; i < 8; i++) //y coordinate
+        for (int i = 0; i < 8; i++) // y coordinate
         {
-            String c = Character.toString((char) (i + 65));
-            System.out.print(c + ": ");
-            for (int j = 7; j >= 0; j--) //x coordinate
+            System.out.print((8 - i) + ": ");
+            for (int j = 0; j < 8; j++) // x coordinate
             {
-                String whatPiece;
-                try
-                {
-                    whatPiece = gameBoard.getSpot(j, i).getPiece().getName();
+                try{
+                    gameBoard.getSpot(j, i).getPiece().printAction();
                 }
-                catch(NullPointerException e)
-                {
-                    whatPiece = ""; //set to empty to invoke the default case
+                catch (NullPointerException e) {
+                    System.out.print("[ ]");
                 }
 
-                switch(whatPiece)
-                {
-                    case "Pawn":
-                        System.out.print("[P]");
-                        break;
-                    case "King":
-                        System.out.print("[C]"); //only using C because knight uses K and C is for crown
-                        break;
-                    case "Queen":
-                        System.out.print("[Q]");
-                        break;
-                    case "Bishop":
-                        System.out.print("[B]");
-                        break;
-                    case "Rook":
-                        System.out.print("[R]");
-                        break;
-                    case "Knight":
-                        System.out.print("[K]");
-                        break;
-                    default:
-                        System.out.print("[ ]");
-                }
-
-                if (j == 0)
+                if (j == 7)
                 {
                     System.out.println();
                 }
 
             }
         }
-        System.out.print("    1  2  3  4  5  6  7  8");
+        System.out.print("    A  B  C  D  E  F  G  H");
     }
 
 
