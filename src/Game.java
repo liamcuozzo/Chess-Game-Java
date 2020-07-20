@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Game {
+public class Game implements Global{
     private Board gameBoard;
     private Player p1 = null;
     private Player p2 = null;
@@ -22,12 +22,13 @@ public class Game {
         System.out.println("Enter Player 2's name (black): ");
         p2Name = input.nextLine();
 
-        this.p1 = new Player(p1Name);
-        this.p2 = new Player(p2Name);
+        this.p1 = new Player(p1Name, white);
+        this.p2 = new Player(p2Name, black);
     }
 
    public void start() {
         drawBoard();
+        // Rest of the game logic goes here
     }
 
     private void drawBoard()
