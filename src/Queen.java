@@ -1,7 +1,7 @@
 public class Queen extends Piece {
 
-    Queen(boolean color, Player player){
-        super(color, player);
+    Queen(Player player){
+        super(player);
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {

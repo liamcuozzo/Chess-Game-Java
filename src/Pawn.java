@@ -2,50 +2,41 @@ import java.lang.*;
 
 public class Pawn extends Piece {
     private int moves; //checks for pawn making it to other side of board
-    private boolean firstMove; //used to check if two space first move will be made
 
-    public Pawn(boolean color, Player player){
-        super(color, player);
+    public Pawn(Player player){
+        super(player);
         this.moves = 0;
-        this.firstMove = true;
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
-        //Need to make sure only goes forward by 1 or 2, or diagonal to attack
-        //Can't move backwards at all or directly sideways
+        /*
+        Not sure if I'll need the constant, but I need to figure out direction differences
+        between white and black pieces. White pieces will move up in a positive y direction to go forward,
+        and black pieces will move in a negative y direction to go forward, relative to the board layout.
 
-        int distY = start.getY() - end.getY(); //check if Y position changes to detect forward or back movement
-        int distX = start.getX() - end.getX(); //check if X position changes to detect sideways movement
-        int absY = Math.abs(distY); //absolute distance moved Y
-        int absX = Math.abs(distX); //absolute distance moved X
+        Unlike the other pieces, pawns cannot move backwards.
+        Normally a pawn moves by advancing a single square, but the first time a pawn moves, it has the option of advancing two squares.
+        Pawns may not use the initial two-square advance to jump over an occupied square, or to capture.
+        Any piece immediately in front of a pawn, friend or foe, blocks its advance.
 
-        //distY for white is positive if going backwards
-        //distY for black is negative if going backwards
-        boolean backwards = ((distY > 0 && start.getPiece().getColor()) | (distY < 0 && !start.getPiece().getColor()));
+        Unlike other pieces, the pawn does not capture in the same direction that it moves.
+        A pawn captures diagonally forward one square to the left or right.
 
-        if (end.getPiece().getColor() == this.getColor() || !backwards) //checks if end spot is occupied by teammate or tries to go backwards
-        {
+        Not gonna add the En Passant.
+        */
+
+        int constant = 0;
+        if (getPlayer().getColor()) // checks if piece is white
+            constant = 1;
+        else
+            constant = -1;
+
+
+        // Check if spot is occupied by teammate
+        if (end.getPiece().getPlayer() == this.getPlayer())
             return false;
-        }
-        else if (absY == 1 && absX == 0) //checks if it only moves forward
-        {
-            incMoves();
-            return true;
-        }
-        else if (absY == 2 && absX == 0) //checks if the first move wants to move two spots forward
-        {
-            this.firstMove = false;
-            incMoves();
-            incMoves();
-            return true;
-        }
-        else if (absY == 1 && absX == 1 && end.getPiece().getColor() != this.getColor()) //checks for attack
-        {
-            incMoves();
-            return true;
-        }
 
-        System.out.println("Error:Got to last return in Pawn");
+
 
         return false;
     }

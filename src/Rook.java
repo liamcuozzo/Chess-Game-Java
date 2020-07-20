@@ -1,7 +1,7 @@
 public class Rook extends Piece {
 
-    public Rook(boolean color, Player player){
-        super(color, player);
+    public Rook(Player player){
+        super(player);
     }
 
     public boolean canMove(Board board, Spot start, Spot end)
