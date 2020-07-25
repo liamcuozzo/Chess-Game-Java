@@ -4,8 +4,53 @@ public class Rook extends Piece {
         super(player);
     }
 
-    public boolean canMove(Board board, Spot start, Spot end)
-    {
+    public boolean canMove(Board board, Spot start, Spot end) {
+        // Information from Wikipedia
+        /*
+        The white rooks start on squares a1 and h1, while the black rooks start on a8 and h8.
+        The rook moves horizontally or vertically, through any number of unoccupied squares (see diagram).
+        As with captures by other pieces, the rook captures by occupying the square on which the enemy piece sits.
+        The rook also participates, with the king, in a special move called castling.
+
+        I am not going to add castling right now.
+        */
+
+        // If the space has teammate in it, always invalid
+        if (teammateOccupied(end))
+            return false;
+
+        int yDist = end.getY() - start.getY();
+        int xDist = end.getX() - start.getX();
+
+        /*
+        Check from starting spot up until the end spot.
+        This allows to make sure there are no pieces in between and even if the last spot is occupied,
+        because already checks for if the spot is a teammate, then it either attacks or moves to an
+        empty spot.
+        */
+        int dir;
+        if (yDist != 0 && xDist == 0)
+        {
+            dir = yDist > 0 ? 1 : -1;
+
+            for (int y = start.getY(); y < yDist - 1; y += dir)
+            {
+                if (isOccupied(board.getSpot(start.getX(), y)))
+                    return false;
+            }
+            return true;
+        }
+        else if (xDist != 0 && yDist == 0)
+        {
+            dir = xDist > 0 ? 1 : -1;
+
+            for (int x = start.getX(); x < xDist - 1; x += dir) {
+                if (isOccupied(board.getSpot(x, start.getY())))
+                    return false;
+            }
+            return true;
+        }
+
         return false;
     }
 

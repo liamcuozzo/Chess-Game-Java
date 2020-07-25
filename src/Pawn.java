@@ -11,11 +11,8 @@ public class Pawn extends Piece {
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
+        // Information from Wikipedia
         /*
-        Not sure if I'll need the constant, but I need to figure out direction differences
-        between white and black pieces. White pieces will move up in a positive y direction to go forward,
-        and black pieces will move in a negative y direction to go forward, relative to the board layout.
-
         Unlike the other pieces, pawns cannot move backwards.
         Normally a pawn moves by advancing a single square, but the first time a pawn moves, it has the option of advancing two squares.
         Pawns may not use the initial two-square advance to jump over an occupied square, or to capture.

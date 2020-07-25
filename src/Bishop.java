@@ -3,7 +3,40 @@ public class Bishop extends Piece {
     public Bishop(Player player){ super(player);}
 
     public boolean canMove(Board board, Spot start, Spot end) {
-        return false;
+        // Information from Wikipedia
+        /*
+        The bishop has no restrictions in distance for each move, but is limited to diagonal movement.
+        Bishops, like all other pieces except the knight, cannot jump over other pieces.
+        A bishop captures by occupying the square on which an enemy piece sits.
+
+        The bishops may be differentiated according to which wing they begin on, i.e. the king's bishop and queen's bishop.
+        As a consequence of its diagonal movement, each bishop always remains on either the white or black squares,
+        and so it is also common to refer to them as light-squared or dark-squared bishops.
+        */
+
+        // If the space has teammate in it, always invalid
+        if (teammateOccupied(end))
+            return false;
+
+        int yDist = end.getY() - start.getY();
+        int xDist = end.getX() - start.getX();
+
+        if (Math.abs(yDist) != Math.abs(xDist))
+            return false;
+
+        int yDir = yDist > 0 ? 1 : -1;
+        int xDir = xDist > 0 ? 1 : -1;
+
+        for (int y = start.getY(); y < yDist - 1; y += yDir)
+        {
+            for (int x = start.getX(); x < xDist - 1; x += xDir)
+            {
+                if (isOccupied(board.getSpot(x, y)))
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     public void printAction() {
