@@ -23,7 +23,7 @@ public class Game implements Global{
     }
 
     private Board gameBoard;
-    private HashMap<String, Coords> commands = new HashMap<String, Coords>(64);
+    private HashMap<String, Coords> commands = new HashMap<>(64);
     private Player p1 = null;
     private Player p2 = null;
 
@@ -81,11 +81,13 @@ public class Game implements Global{
             System.out.print((i + 1) + ": ");
             for (int j = 0; j < 8; j++) // x coordinate
             {
+                String backgroundColor = (j + i)%2 == 0 ? BLACK_BACKGROUND_BRIGHT: WHITE_BACKGROUND;
                 try{
-                    gameBoard.getSpot(j, i).getPiece().printAction();
+                    String str = gameBoard.getSpot(j, i).getPiece().printAction();
+                    System.out.print(backgroundColor + str);
                 }
                 catch (NullPointerException e) {
-                    System.out.print("[ ]");
+                    System.out.print(backgroundColor + WHITE_BRIGHT + "[ ]" + RESET);
                 }
 
                 if (j == 7)
@@ -124,10 +126,10 @@ public class Game implements Global{
     private String getMove()
     {
         Scanner input = new Scanner(System.in);
-        String move = "";
+        String move;
         Pattern pattern = Pattern.compile("[abcdefgh][1-8] [abcdefgh][1-8]");
 
-        boolean matchFound = false;
+        boolean matchFound;
         System.out.print("\nMake a move: ");
         move = input.nextLine();
         Matcher matcher = pattern.matcher(move);
