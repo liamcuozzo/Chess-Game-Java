@@ -25,7 +25,9 @@ public class Knight extends Piece {
         return check == 2;
     }
 
-    public void printAction() {
-        System.out.print("[K]");
+    public String printAction() {
+        String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
+
+        return color + "[K]" + RESET;
     }
 }

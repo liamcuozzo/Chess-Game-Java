@@ -30,7 +30,9 @@ public class King extends Piece {
         return yDist <= 1 && xDist <= 1;
     }
 
-    public void printAction() {
-        System.out.print("[C]");
+    public String printAction() {
+        String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
+
+        return color + "[C]" + RESET;
     }
 }

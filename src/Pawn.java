@@ -1,5 +1,5 @@
-import java.beans.XMLDecoder;
-import java.lang.*;
+import java.lang.Math;
+import java.lang.System;
 
 public class Pawn extends Piece {
     private int moves; //checks for pawn making it to other side of board
@@ -98,7 +98,9 @@ public class Pawn extends Piece {
         this.moves++;
     }
 
-    public void printAction() {
-        System.out.print("[P]");
+    public String printAction() {
+        String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
+
+        return color + "[P]" + RESET;
     }
 }

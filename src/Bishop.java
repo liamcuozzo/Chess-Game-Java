@@ -1,3 +1,5 @@
+import java.util.concurrent.BlockingDeque;
+
 public class Bishop extends Piece {
 
     public Bishop(Player player){ super(player);}
@@ -39,7 +41,9 @@ public class Bishop extends Piece {
         return true;
     }
 
-    public void printAction() {
-        System.out.print("[B]");
+    public String printAction() {
+        String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
+
+        return color + "[B]" + RESET;
     }
 }

@@ -54,7 +54,9 @@ public class Rook extends Piece {
         return false;
     }
 
-    public void printAction(){
-        System.out.print("[R]");
+    public String printAction(){
+        String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
+
+        return color + "[R]" + RESET;
     }
 }

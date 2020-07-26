@@ -1,4 +1,4 @@
-public abstract class Piece {
+public abstract class Piece implements Global{
     private Player player = null;
     private boolean alive = true;
 
@@ -7,7 +7,7 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Board board, Spot start, Spot end);
-    public abstract void printAction();
+    public abstract String printAction();
 
     private void setPlayer(Player assignedPlayer){
         this.player = assignedPlayer;

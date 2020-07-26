@@ -63,7 +63,9 @@ public class Queen extends Piece {
         return false;
     }
 
-    public void printAction() {
-        System.out.print("[Q]");
+    public String printAction() {
+        String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
+
+        return color + "[Q]" + RESET;
     }
 }
