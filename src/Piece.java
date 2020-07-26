@@ -30,6 +30,6 @@ public abstract class Piece {
     protected boolean teammateOccupied (Spot check)
     {
         // Checks that spot piece is not null and that both piece colors are the same
-        return !isOccupied(check) && check.getPiece().getPlayer().getColor() == this.getPlayer().getColor();
+        return isOccupied(check) && check.getPiece().getPlayer().getColor() == this.getPlayer().getColor();
     }
 }
