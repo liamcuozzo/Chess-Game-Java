@@ -33,9 +33,9 @@ public class Rook extends Piece {
         {
             dir = yDist > 0 ? 1 : -1;
 
-            for (int y = start.getY(); y < yDist - 1; y += dir)
+            for (int y = 0; y < yDist - 1; y++)
             {
-                if (isOccupied(board.getSpot(start.getX(), y)))
+                if (isOccupied(board.getSpot(start.getX(), start.getY() + (y * dir))))
                     return false;
             }
             return true;
@@ -44,8 +44,8 @@ public class Rook extends Piece {
         {
             dir = xDist > 0 ? 1 : -1;
 
-            for (int x = start.getX(); x < xDist - 1; x += dir) {
-                if (isOccupied(board.getSpot(x, start.getY())))
+            for (int x = 0; x < xDist - 1; x++) {
+                if (isOccupied(board.getSpot(start.getX() + (x * dir), start.getY())))
                     return false;
             }
             return true;

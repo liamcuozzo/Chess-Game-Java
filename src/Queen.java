@@ -43,9 +43,9 @@ public class Queen extends Piece {
         }
         else if (yDist != 0 && xDist == 0)
         {
-            for (int y = start.getY(); y < yDist - 1; y += yDir)
+            for (int y = 0; y < yDist - 1; y++)
             {
-                if (isOccupied(board.getSpot(start.getX(), y)))
+                if (isOccupied(board.getSpot(start.getX(), start.getY() + (y * yDir))))
                     return false;
             }
             return true;
@@ -53,8 +53,8 @@ public class Queen extends Piece {
         }
         else if (yDist == 0 && xDist != 0)
         {
-            for (int x = start.getX(); x < xDist - 1; x += xDir) {
-                if (isOccupied(board.getSpot(x, start.getY())))
+            for (int x = 0; x < xDist - 1; x++) {
+                if (isOccupied(board.getSpot(start.getX() + (x * xDir), start.getY())))
                     return false;
             }
             return true;
