@@ -14,6 +14,7 @@ public class Board {
         spots[x][y].setY(y);
         spots[x][y].setPiece(piece);
     }
+
     private void initBoard(Player whitePlayer, Player blackPlayer){
         // Initialize the 2D array
         spots = new Spot[8][8];
