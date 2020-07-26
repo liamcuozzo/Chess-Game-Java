@@ -64,21 +64,21 @@ public class Game implements Global{
         char add = 'a';
         for (int x = 0; x < 8; x++)
         {
-            add += x;
             for (int y = 0; y < 8; y++)
             {
                 String put = String.valueOf(add);
                 put = put + (y + 1);
                 commands.put(put, new Coords(x, y));
             }
+            add += 1;
         }
     }
 
     private void drawBoard()
     {
-        for (int i = 0; i < 8; i++) // y coordinate
+        for (int i = 7; i >= 0; i--) // y coordinate
         {
-            System.out.print((8 - i) + ": ");
+            System.out.print((i + 1) + ": ");
             for (int j = 0; j < 8; j++) // x coordinate
             {
                 try{
@@ -128,7 +128,7 @@ public class Game implements Global{
         Pattern pattern = Pattern.compile("[abcdefgh][1-8] [abcdefgh][1-8]");
 
         boolean matchFound = false;
-        System.out.print("Make a move: ");
+        System.out.print("\nMake a move: ");
         move = input.nextLine();
         Matcher matcher = pattern.matcher(move);
         matchFound = matcher.find();

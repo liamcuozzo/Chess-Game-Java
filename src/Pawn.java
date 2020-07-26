@@ -67,10 +67,10 @@ public class Pawn extends Piece {
         if (!doubleStart && yDist == 2 && xDist == 0)
         {
             // Need to check along y access for the next two spots
-            for (int y = start.getY(); y < yDist; y += constant)
+            for (int y = 0; y < yDist; y += constant)
             {
                 // If any space along this check is occupied, invalid move
-                if (isOccupied(board.getSpot(start.getX(), y)))
+                if (isOccupied(board.getSpot(start.getX(), start.getY() + (y + 1))))
                     return false;
             }
             doubleStart = true;
