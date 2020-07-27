@@ -18,8 +18,8 @@ public class Bishop extends Piece {
         if (teammateOccupied(end))
             return false;
 
-        int yDist = end.getY() - start.getY();
-        int xDist = end.getX() - start.getX();
+        int yDist = Math.abs(end.getY() - start.getY());
+        int xDist = Math.abs(end.getX() - start.getX());
 
         if (Math.abs(yDist) != Math.abs(xDist))
             return false;
@@ -27,11 +27,11 @@ public class Bishop extends Piece {
         int yDir = yDist > 0 ? 1 : -1;
         int xDir = xDist > 0 ? 1 : -1;
 
-        for (int y = start.getY(); y < yDist - 1; y += yDir)
+        for (int y = 1; y <= yDist; y++)
         {
-            for (int x = start.getX(); x < xDist - 1; x += xDir)
+            for (int x = 1; x <= xDist; x++)
             {
-                if (isOccupied(board.getSpot(x, y)))
+                if (isOccupied(board.getSpot(start.getX() + (x * xDir), start.getY() + (y * yDir))))
                     return false;
             }
         }
