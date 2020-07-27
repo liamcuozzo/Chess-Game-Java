@@ -1,7 +1,7 @@
 public class Queen extends Piece {
 
     Queen(Player player){
-        super(player);
+        super(player, "[Q]");
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
@@ -66,6 +66,6 @@ public class Queen extends Piece {
     public String printAction() {
         String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
 
-        return color + "[Q]" + RESET;
+        return color + character + RESET;
     }
 }

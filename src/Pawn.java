@@ -1,12 +1,11 @@
 import java.lang.Math;
-import java.lang.System;
 
 public class Pawn extends Piece {
     private int moves; //checks for pawn making it to other side of board
     private boolean doubleStart = false;
 
     public Pawn(Player player){
-        super(player);
+        super(player, "[P]");
         this.moves = 0;
     }
 
@@ -67,10 +66,10 @@ public class Pawn extends Piece {
         if (!doubleStart && yDist == 2 && xDist == 0)
         {
             // Need to check along y access for the next two spots
-            for (int y = 0; y < yDist; y += constant)
+            for (int y = 1; y < yDist; y++)
             {
                 // If any space along this check is occupied, invalid move
-                if (isOccupied(board.getSpot(start.getX(), start.getY() + (y + 1))))
+                if (isOccupied(board.getSpot(start.getX(), start.getY() + (y * constant))))
                     return false;
             }
             doubleStart = true;
@@ -98,9 +97,14 @@ public class Pawn extends Piece {
         this.moves++;
     }
 
+    public int getMoves()
+    {
+        return this.moves;
+    }
+
     public String printAction() {
         String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
 
-        return color + "[P]" + RESET;
+        return color + character + RESET;
     }
 }

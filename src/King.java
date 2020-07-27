@@ -1,7 +1,7 @@
 public class King extends Piece {
 
     King(Player player){
-        super(player);
+        super(player, "[C]");
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
@@ -33,6 +33,6 @@ public class King extends Piece {
     public String printAction() {
         String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
 
-        return color + "[C]" + RESET;
+        return color + character + RESET;
     }
 }

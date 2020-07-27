@@ -1,8 +1,6 @@
-import java.util.concurrent.BlockingDeque;
-
 public class Bishop extends Piece {
 
-    public Bishop(Player player){ super(player);}
+    public Bishop(Player player){ super(player, "[B]");}
 
     public boolean canMove(Board board, Spot start, Spot end) {
         // Information from Wikipedia
@@ -44,6 +42,6 @@ public class Bishop extends Piece {
     public String printAction() {
         String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
 
-        return color + "[B]" + RESET;
+        return color + character + RESET;
     }
 }

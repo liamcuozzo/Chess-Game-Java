@@ -1,9 +1,10 @@
 public abstract class Piece implements Global{
     private Player player = null;
-    private boolean alive = true;
+    protected String character;
 
-    public Piece(Player assignedPlayer){
+    public Piece(Player assignedPlayer, String character){
         this.setPlayer(assignedPlayer);
+        this.setCharacter(character);
     }
 
     public abstract boolean canMove(Board board, Spot start, Spot end);
@@ -16,8 +17,8 @@ public abstract class Piece implements Global{
         return this.player;
     }
 
-    public boolean isAlive() {return this.alive;}
-    public void setAlive(boolean status) {this.alive = status;}
+    public String getCharacter() { return character; }
+    private void setCharacter(String character) {this.character = character;}
 
     // Used to check if
     protected boolean isOccupied (Spot check)
@@ -32,4 +33,6 @@ public abstract class Piece implements Global{
         // Checks that spot piece is not null and that both piece colors are the same
         return isOccupied(check) && check.getPiece().getPlayer().getColor() == this.getPlayer().getColor();
     }
+
+    public int getMoves(){return 0;}
 }

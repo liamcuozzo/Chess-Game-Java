@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.regex.*;
@@ -5,8 +6,8 @@ import java.util.regex.*;
 public class Game implements Global{
 
     private static class  Coords {
-        private int x;
-        private int y;
+        private final int x;
+        private final int y;
 
         private Coords(int x, int y)
         {
@@ -22,8 +23,8 @@ public class Game implements Global{
         }
     }
 
-    private Board gameBoard;
-    private HashMap<String, Coords> commands = new HashMap<>(64);
+    private final Board gameBoard;
+    private final HashMap<String, Coords> commands = new HashMap<>(64);
     private Player p1 = null;
     private Player p2 = null;
 
@@ -100,7 +101,8 @@ public class Game implements Global{
         System.out.print("    A  B  C  D  E  F  G  H");
     }
 
-    private boolean makeMove (String from, String to)
+
+    private boolean makeMove (String from, String to, boolean currentPlayer)
     {
         Coords a = commands.get(from);
         Coords b = commands.get(to);
@@ -108,17 +110,33 @@ public class Game implements Global{
         Spot start = gameBoard.getSpot(a.getX(), a.getY());
         Spot end = gameBoard.getSpot(b.getX(), b.getY());
 
-        if (start.getPiece() != null && start.getPiece().canMove(gameBoard, start, end))
+        if (start.getPiece() == null)
+        {
+            System.out.println("Choose a non-empty space.");
+            return false;
+        }
+
+        if (start.getPiece().getPlayer().getColor() != currentPlayer)
+        {
+            System.out.println("This is not your piece. Choose another.");
+            return false;
+        }
+
+        if (start.getPiece().canMove(gameBoard, start, end))
         {
             // Want to put the piece at start at the end
-            end.setPiece(null); // I set it to null first to make sure the garbage collector gets i. Probably not needed
+            end.setPiece(null); // I set it to null first to make sure the garbage collector gets it. Probably not needed.
             end.setPiece(start.getPiece());
             start.setPiece(null);
+
+            if (end.getPiece().getCharacter().equals("[P]") && end.getPiece().getMoves() == 6)
+                promotePawn(gameBoard, end);
+
             return true;
         }
         else
         {
-            System.out.println("Invalid move.");
+            System.out.println("Invalid move. Try again.");
             return false;
         }
     }
@@ -137,7 +155,7 @@ public class Game implements Global{
 
         while (!matchFound)
         {
-            System.out.println("ERROR: Invalid move format.");
+            System.out.println("ERROR: Invalid move format. Try again.");
             System.out.print("Make a move: ");
             move = input.nextLine();
             matcher = pattern.matcher(move);
@@ -147,18 +165,122 @@ public class Game implements Global{
         return move;
     }
 
+    private void promotePawn(Board board, Spot spot)
+    {
+        Scanner input = new Scanner(System.in);
+        int choice = -1;
+
+        boolean tryForInput = true;
+        while (tryForInput)
+        {
+            try
+            {
+                System.out.println("Choose a type of piece to upgrade to (type a number).");
+                System.out.println("1. Queen");
+                System.out.println("2. Knight");
+                System.out.println("3. Bishop");
+                System.out.println("4. Rook.");
+
+                choice = input.nextInt();
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("Input not recognized as a number choice. Please try again.");
+            }
+
+            if (choice < 0 || choice > 4)
+            {
+                System.out.println("Input not recognized as one of the choices. Please try again.");
+            }
+            else
+                tryForInput = false;
+        }
+
+        Piece newPiece = null;
+        Player player = board.getSpot(spot.getX(), spot.getY()).getPiece().getPlayer();
+        switch (choice)
+        {
+            case 1:
+                newPiece = new Queen(player);
+                break;
+            case 2:
+                newPiece = new Knight(player);
+                break;
+            case 3:
+                newPiece = new Bishop(player);
+                break;
+            case 4:
+                newPiece = new Rook(player);
+                break;
+        }
+
+        board.getSpot(spot.getX(), spot.getY()).setPiece(newPiece);
+    }
+
+    private int isKingDead (Board board)
+    {
+        boolean whiteKing = false;
+        boolean blackKing = false;
+
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                Piece checkPiece = board.getSpot(i, j).getPiece();
+                if (checkPiece != null)
+                {
+                    if (checkPiece.getCharacter().equals("[C]"))
+                        if (checkPiece.getPlayer().getColor())
+                            whiteKing = true;
+                        else if (!checkPiece.getPlayer().getColor())
+                            blackKing = true;
+                }
+            }
+        }
+
+        if (!whiteKing)
+            return 1;
+        else if (!blackKing)
+            return -1;
+        else
+            return 0;
+    }
+
     public void start() {
         boolean gameOver = false;
+        boolean isValidMove = false;
 
         drawBoard();
         //Game logic goes here
-        System.out.println("\n" + p1.getName() + " goes first.");
+        int tracker = 0; // Used to switch between P1 and P2 turns
         while (!gameOver)
         {
-            String move = getMove();
-            String[] moves = move.split(" ");
-            makeMove(moves[0], moves[1]);
+            Player currentPlayer = tracker % 2 == 0 ? p1 : p2; // if tracker is even, p1 (white) goes, else p2 (black) goes
+            System.out.println("\n" + currentPlayer.getName() + "'s turn.");
+
+            while (!isValidMove)
+            {
+                String move = getMove();
+                String[] moves = move.split(" ");
+                isValidMove = makeMove(moves[0], moves[1], currentPlayer.getColor());
+            }
+            int deadKingCheck = isKingDead(gameBoard);
             drawBoard();
+            if (deadKingCheck != 0)
+            {
+                if (deadKingCheck == -1) // White wins
+                {
+                    System.out.println("Congratulations to " + p1.getName() + "! You have won!");
+                }
+                else // Black wins
+                {
+                    System.out.println("Congratulations to " + p2.getName() + "! You have won!");
+                }
+                System.out.println("Game Over.");
+                gameOver = true;
+            }
+            tracker++;
+            isValidMove = false;
         }
     }
 }

@@ -1,7 +1,7 @@
 public class Knight extends Piece {
 
     Knight(Player player){
-        super(player);
+        super(player, "[K]");
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
@@ -28,6 +28,6 @@ public class Knight extends Piece {
     public String printAction() {
         String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
 
-        return color + "[K]" + RESET;
+        return color + character + RESET;
     }
 }

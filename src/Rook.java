@@ -1,7 +1,7 @@
 public class Rook extends Piece {
 
     public Rook(Player player){
-        super(player);
+        super(player, "[R]");
     }
 
     public boolean canMove(Board board, Spot start, Spot end) {
@@ -33,7 +33,7 @@ public class Rook extends Piece {
         {
             dir = yDist > 0 ? 1 : -1;
 
-            for (int y = 0; y < yDist - 1; y++)
+            for (int y = 1; y < yDist - 1; y++)
             {
                 if (isOccupied(board.getSpot(start.getX(), start.getY() + (y * dir))))
                     return false;
@@ -44,7 +44,7 @@ public class Rook extends Piece {
         {
             dir = xDist > 0 ? 1 : -1;
 
-            for (int x = 0; x < xDist - 1; x++) {
+            for (int x = 1; x < xDist - 1; x++) {
                 if (isOccupied(board.getSpot(start.getX() + (x * dir), start.getY())))
                     return false;
             }
@@ -57,6 +57,6 @@ public class Rook extends Piece {
     public String printAction(){
         String color = this.getPlayer().getColor() ? WHITE_BRIGHT : BLACK;
 
-        return color + "[R]" + RESET;
+        return color + character + RESET;
     }
 }
