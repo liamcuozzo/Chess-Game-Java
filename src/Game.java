@@ -266,6 +266,7 @@ public class Game implements Global{
             }
             int deadKingCheck = isKingDead(gameBoard);
             drawBoard();
+            System.out.println();
             if (deadKingCheck != 0)
             {
                 if (deadKingCheck == -1) // White wins
